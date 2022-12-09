@@ -1,40 +1,59 @@
 import * as React from "react";
 import { useState } from "react";
 import { View, Image, StyleSheet, ScrollView } from "react-native";
-import { Button, Card, Icon, Text } from "@rneui/base";
+import { Button, Card, Icon, ListItem, Text } from "@rneui/base";
 
-import getRandomWorkout from "../data/utils/getRandomWorkout";
-import DisplayWorkoutInstance from "../components/displayWorkoutInstance";
+import CreateWorkoutInstance from "../components/createWorkoutInstance";
 
-function changeStateWorkout(list, stateFunc) {
-  let tempList = [...list];
-  tempList.push(getRandomWorkout());
-  stateFunc(tempList);
-}
+let listOfTargets = [
+  "abductors",
+  "abs",
+  "adductors",
+  "biceps",
+  "calves",
+  "cardiovascular system",
+  "delts",
+  "forearms",
+  "glutes",
+  "hamstrings",
+  "lats",
+  "levator scapulae",
+  "pectorals",
+  "quads",
+  "serratus anterior",
+  "spine",
+  "traps",
+  "triceps",
+  "upper back",
+];
 
 export default function CreateWorkoutRoutine({ navigation }) {
-  const [workoutList, setWorkoutList] = useState([getRandomWorkout()]);
+  const [targets, setTargets] = useState(["Select Target"]);
 
   return (
     <ScrollView>
       <Button
-        title="New Workout"
-        onPress={() => {
-          changeStateWorkout(workoutList, setWorkoutList);
-        }}
-        size="lg"
-        buttonStyle={{ margin: 15 }}
+        title={"Add Workout"}
+        onPress={() => setTargets([...targets, "Select Target"])}
       />
-      {workoutList.map((curr) => {
-        return <DisplayWorkoutInstance workout={curr} key={curr.id} />;
+      {targets.map((curr, ind) => {
+        return (
+          <CreateWorkoutInstance
+            key={ind}
+            ind={ind}
+            listOfTargets={listOfTargets}
+            targets={targets}
+            setTargets={setTargets}
+          />
+        );
       })}
+      <Button
+        title={"Start"}
+        onPress={() => {
+          console.log(targets);
+          navigation.navigate("DisplayWorkoutRoutine", { targets: targets });
+        }}
+      />
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  img: {
-    width: 200,
-    height: 200,
-  },
-});
