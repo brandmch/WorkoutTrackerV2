@@ -10,6 +10,4 @@ let listOfTargets = data
   }, [])
   .sort();
 
-console.log(listOfTargets);
-
 export default listOfTargets;

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { View, Image, StyleSheet, ScrollView } from "react-native";
-import { Button, Card, Icon, ListItem, Text } from "@rneui/base";
+import { Button, Card, Icon, ListItem, Text, Switch } from "@rneui/base";
 
 import CreateWorkoutInstance from "../components/createWorkoutInstance";
 
@@ -50,7 +50,6 @@ export default function CreateWorkoutRoutine({ navigation }) {
       <Button
         title={"Start"}
         onPress={() => {
-          console.log(targets);
           navigation.navigate("DisplayWorkoutRoutine", { targets: targets });
         }}
       />
