@@ -34,6 +34,7 @@ export default function DisplayWorkoutRoutine({ navigation, route }) {
           />
         );
       })}
+      <Button title={"BEGIN WORKOUT"} containerStyle={{ margin: 20 }} />
     </ScrollView>
   );
 }

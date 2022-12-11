@@ -22,17 +22,19 @@ const DisplayWorkoutInstance = ({ workout, woList, setWOList, index }) => {
         }}
       >
         <View style={{ display: "flex", flex: 1 }}>
-          <Card.Title
-            style={{
-              flex: 2,
-              position: "absolute",
-              float: "left",
-              width: "80%",
-              marginLeft: 0,
-            }}
-          >
-            {capitalize(workoutState.name)}
-          </Card.Title>
+          <View style={{ flex: 1 }}>
+            <Card.Title
+              style={{
+                flex: 2,
+                position: "absolute",
+                float: "left",
+                width: "80%",
+                marginLeft: 0,
+              }}
+            >
+              {capitalize(workoutState.name)}
+            </Card.Title>
+          </View>
           <View style={{ flex: 1, alignItems: "flex-end" }}>
             <Icon
               name="arrow-drop-down"

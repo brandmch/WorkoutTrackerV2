@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "workout-tracker-v2",
-    "slug": "workout-tracker-v2",
+    "slug": "workout-tracker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "595b35fd-2c9f-4a30-b71f-2ff11d8f6483"
+      }
+    },
+    "owner": "brandmch"
   }
 }
