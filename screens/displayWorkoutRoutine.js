@@ -29,7 +29,7 @@ export default function DisplayWorkoutRoutine({ navigation, route }) {
         return (
           <DisplayWorkoutInstance
             workout={curr}
-            key={curr.id}
+            key={index}
             index={index}
             woList={woList}
             setWOList={setWOList}

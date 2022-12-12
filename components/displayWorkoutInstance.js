@@ -46,11 +46,20 @@ const DisplayWorkoutInstance = ({
             <Icon
               name="refresh"
               onPress={() => {
-                let newWO = getRandomWorkoutByTarget(
-                  workoutState.target,
-                  filters,
-                  bodyPartsvTargets
-                );
+                let newWO;
+                if (bodyPartsvTargets) {
+                  newWO = getRandomWorkoutByTarget(
+                    workoutState.target,
+                    filters,
+                    bodyPartsvTargets
+                  );
+                } else {
+                  newWO = getRandomWorkoutByTarget(
+                    workoutState.bodyPart,
+                    filters,
+                    bodyPartsvTargets
+                  );
+                }
                 let tempArr = [...woList];
                 tempArr[index] = newWO;
                 setWOList(tempArr);

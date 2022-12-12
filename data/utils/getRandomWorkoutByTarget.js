@@ -1,6 +1,7 @@
 import data from "../workoutData.json";
 
 const getRandomWorkoutByTarget = (target, filters, bodyPartsvTargets) => {
+  console.log(target, filters, bodyPartsvTargets);
   if (filters.length === 0) {
     let tempArr;
     if (bodyPartsvTargets) {
