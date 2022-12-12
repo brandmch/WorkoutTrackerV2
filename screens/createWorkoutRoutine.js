@@ -1,32 +1,12 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { ScrollView } from "react-native";
-import { Button, Icon, Text, Overlay, CheckBox } from "@rneui/base";
+import { Button, Icon, Text, Overlay, CheckBox, Switch } from "@rneui/base";
 
 import CreateWorkoutInstance from "../components/createWorkoutInstance";
 import listOfEquipment from "../data/utils/getListOfEquipment";
-
-let listOfTargets = [
-  "abductors",
-  "abs",
-  "adductors",
-  "biceps",
-  "calves",
-  "cardiovascular system",
-  "delts",
-  "forearms",
-  "glutes",
-  "hamstrings",
-  "lats",
-  "levator scapulae",
-  "pectorals",
-  "quads",
-  "serratus anterior",
-  "spine",
-  "traps",
-  "triceps",
-  "upper back",
-];
+import listOfBodyParts from "../data/utils/getListOfBodyParts";
+import listOfTargets from "../data/utils/getListOfTargets";
 
 function DisplayListOfEquipment({ filters, setFilters }) {
   return Object.keys(filters).map((curr) => (
@@ -46,6 +26,7 @@ export default function CreateWorkoutRoutine({ navigation }) {
   const [targets, setTargets] = useState(["Select Target"]);
   const [filterOverlayVisable, setFilterOverlayIsVisable] = useState(false);
   const [filters, setFilters] = useState({});
+  const [bodypartvTarget, setBodypartvTarget] = useState(false);
 
   useEffect(() => {
     let tempObj = {};
@@ -62,6 +43,13 @@ export default function CreateWorkoutRoutine({ navigation }) {
         name="filter-list"
         onPress={() => {
           setFilterOverlayIsVisable(!filterOverlayVisable);
+        }}
+      />
+      <Switch
+        value={bodypartvTarget}
+        onValueChange={() => {
+          setBodypartvTarget(!bodypartvTarget);
+          setTargets(["Select Target"]);
         }}
       />
       <Overlay
@@ -86,11 +74,19 @@ export default function CreateWorkoutRoutine({ navigation }) {
         onPress={() => setTargets([...targets, "Select Target"])}
       />
       {targets.map((curr, ind) => {
-        return (
+        return bodypartvTarget ? (
           <CreateWorkoutInstance
             key={ind}
             ind={ind}
             listOfTargets={listOfTargets}
+            targets={targets}
+            setTargets={setTargets}
+          />
+        ) : (
+          <CreateWorkoutInstance
+            key={ind}
+            ind={ind}
+            listOfTargets={listOfBodyParts}
             targets={targets}
             setTargets={setTargets}
           />
@@ -108,6 +104,7 @@ export default function CreateWorkoutRoutine({ navigation }) {
           navigation.navigate("DisplayWorkoutRoutine", {
             targets: targets,
             filters: equipment,
+            bodyPartsvTargets: bodypartvTarget,
           });
         }}
       />

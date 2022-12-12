@@ -8,6 +8,7 @@ export default function CreateWorkoutInstance({
   listOfTargets,
   setTargets,
   targets,
+  bodyPartsvTargets,
 }) {
   const [expanded, setExpanded] = useState(false);
 

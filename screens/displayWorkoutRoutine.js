@@ -9,14 +9,16 @@ import getRandomWorkoutByTarget from "../data/utils/getRandomWorkoutByTarget";
 export default function DisplayWorkoutRoutine({ navigation, route }) {
   const [woList, setWOList] = useState([]);
 
-  const { targets, filters } = route.params;
+  const { targets, filters, bodyPartsvTargets } = route.params;
 
   useEffect(() => {
     let tempArr = [];
     targets
       .filter((curr) => curr !== "Select Target")
       .forEach((curr) => {
-        tempArr.push(getRandomWorkoutByTarget(curr, filters));
+        tempArr.push(
+          getRandomWorkoutByTarget(curr, filters, bodyPartsvTargets)
+        );
       });
     setWOList(tempArr);
   }, []);
@@ -32,6 +34,7 @@ export default function DisplayWorkoutRoutine({ navigation, route }) {
             woList={woList}
             setWOList={setWOList}
             filters={filters}
+            bodyPartsvTargets={bodyPartsvTargets}
           />
         );
       })}

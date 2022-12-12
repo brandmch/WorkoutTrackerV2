@@ -12,11 +12,10 @@ const DisplayWorkoutInstance = ({
   setWOList,
   index,
   filters,
+  bodyPartsvTargets,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [workoutState, setWorkout] = useState(workout);
-
-  console.log(workoutState.name, workoutState.equipment);
 
   return (
     <Pressable
@@ -49,7 +48,8 @@ const DisplayWorkoutInstance = ({
               onPress={() => {
                 let newWO = getRandomWorkoutByTarget(
                   workoutState.target,
-                  filters
+                  filters,
+                  bodyPartsvTargets
                 );
                 let tempArr = [...woList];
                 tempArr[index] = newWO;
