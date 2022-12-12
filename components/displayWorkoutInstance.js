@@ -6,9 +6,17 @@ import { View, Pressable } from "react-native";
 import capitalize from "../utils/capitalize";
 import getRandomWorkoutByTarget from "../data/utils/getRandomWorkoutByTarget";
 
-const DisplayWorkoutInstance = ({ workout, woList, setWOList, index }) => {
+const DisplayWorkoutInstance = ({
+  workout,
+  woList,
+  setWOList,
+  index,
+  filters,
+}) => {
   const [expanded, setExpanded] = useState(false);
   const [workoutState, setWorkout] = useState(workout);
+
+  console.log(workoutState.name, workoutState.equipment);
 
   return (
     <Pressable
@@ -16,29 +24,22 @@ const DisplayWorkoutInstance = ({ workout, woList, setWOList, index }) => {
         setExpanded(!expanded);
       }}
     >
-      <Card
-        containerStyle={{
-          flex: 1,
-        }}
-      >
-        <View style={{ display: "flex", flex: 1 }}>
-          <View style={{ flex: 1 }}>
-            <Card.Title
-              style={{
-                flex: 2,
-                position: "absolute",
-                float: "left",
-                width: "80%",
-                marginLeft: 0,
-              }}
-            >
-              {capitalize(workoutState.name)}
-            </Card.Title>
+      <Card>
+        <View>
+          <View>
+            <View>
+              <Card.Title>{capitalize(workoutState.name)}</Card.Title>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Image
+                source={{ uri: workoutState.gifUrl }}
+                containerStyle={{ width: 100, height: 100 }}
+              />
+            </View>
           </View>
-          <View style={{ flex: 1, alignItems: "flex-end" }}>
+          <View>
             <Icon
               name="arrow-drop-down"
-              containerStyle={{ marginLeft: 40 }}
               onPress={() => {
                 setExpanded(!expanded);
               }}
@@ -46,7 +47,10 @@ const DisplayWorkoutInstance = ({ workout, woList, setWOList, index }) => {
             <Icon
               name="refresh"
               onPress={() => {
-                let newWO = getRandomWorkoutByTarget(workoutState.target);
+                let newWO = getRandomWorkoutByTarget(
+                  workoutState.target,
+                  filters
+                );
                 let tempArr = [...woList];
                 tempArr[index] = newWO;
                 setWOList(tempArr);
@@ -56,7 +60,7 @@ const DisplayWorkoutInstance = ({ workout, woList, setWOList, index }) => {
           </View>
         </View>
         {expanded && (
-          <View style={{ display: "flex" }}>
+          <View>
             <Text>{capitalize(workoutState.bodyPart)}</Text>
             <Image
               source={{ uri: workoutState.gifUrl }}
