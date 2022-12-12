@@ -99,9 +99,15 @@ export default function CreateWorkoutRoutine({ navigation }) {
       <Button
         title={"Start"}
         onPress={() => {
+          let equipment = [];
+          for (let i in filters) {
+            if (filters[i] === true) {
+              equipment.push(i);
+            }
+          }
           navigation.navigate("DisplayWorkoutRoutine", {
             targets: targets,
-            filters: filters,
+            filters: equipment,
           });
         }}
       />
