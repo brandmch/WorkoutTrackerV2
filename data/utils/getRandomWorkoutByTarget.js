@@ -1,5 +1,4 @@
 import data from "../workoutData.json";
-// const data = require("../workoutData.json");
 
 const getRandomWorkoutByTarget = (target, filters) => {
   if (filters.length === 0) {
