@@ -15,14 +15,13 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/595b35fd-2c9f-4a30-b71f-2ff11d8f6483"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.brandmch.workouttracker"
     },
     "android": {
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
