@@ -11,8 +11,7 @@ const DisplayWorkoutInstance = ({
   woList,
   setWOList,
   index,
-  filters,
-  bodyPartsvTargets,
+  currWOobj,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [workoutState, setWorkout] = useState(workout);
@@ -47,19 +46,14 @@ const DisplayWorkoutInstance = ({
               name="refresh"
               onPress={() => {
                 let newWO;
-                if (bodyPartsvTargets) {
-                  newWO = getRandomWorkoutByTarget(
-                    workoutState.target,
-                    filters,
-                    bodyPartsvTargets
-                  );
-                } else {
-                  newWO = getRandomWorkoutByTarget(
-                    workoutState.bodyPart,
-                    filters,
-                    bodyPartsvTargets
-                  );
-                }
+                let target = currWOobj.bodyVtarget
+                  ? workoutState.bodyPart
+                  : workoutState.target;
+                newWO = getRandomWorkoutByTarget(
+                  target,
+                  currWOobj.filters,
+                  currWOobj.bodyVtarget
+                );
                 let tempArr = [...woList];
                 tempArr[index] = newWO;
                 setWOList(tempArr);

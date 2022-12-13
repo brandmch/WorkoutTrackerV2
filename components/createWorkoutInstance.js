@@ -1,5 +1,5 @@
 import { Text } from "@rneui/base";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import { ListItem } from "@rneui/base";
 
@@ -12,9 +12,6 @@ export default function CreateWorkoutInstance({
   setCurrWOobj,
 }) {
   const [expanded, setExpanded] = useState(false);
-
-  console.log(currWOobj.bodyVtarget);
-
   let options = currWOobj.bodyVtarget
     ? [...listOfBodyParts]
     : [...listOfTargets];
@@ -41,7 +38,7 @@ export default function CreateWorkoutInstance({
             bottomDivider
             onPress={() => {
               let tempArr = [...currWOobj.targets];
-              tempArr[ind] = listOfTargets[index];
+              tempArr[ind] = options[index];
               setCurrWOobj({ ...currWOobj, targets: [...tempArr] });
               setExpanded(false);
             }}

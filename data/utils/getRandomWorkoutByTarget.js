@@ -1,19 +1,29 @@
 import data from "../workoutData.json";
+// const data = require("../workoutData.json");
 
-const getRandomWorkoutByTarget = (target, filters, bodyPartsvTargets) => {
+const getRandomWorkoutByTarget = (...args) => {
+  let target = args[0];
+  let filters = [];
+  let bodyPartsvTargets = args[2];
+
+  let tempArr;
+
+  for (let i in args[1]) {
+    if (args[1][i] === true) {
+      filters.push(i);
+    }
+  }
+
   console.log(target, filters, bodyPartsvTargets);
+
   if (filters.length === 0) {
-    let tempArr;
-    if (bodyPartsvTargets) {
+    if (!bodyPartsvTargets) {
       tempArr = data.filter((curr) => curr.target === target);
     } else {
       tempArr = data.filter((curr) => curr.bodyPart === target);
     }
-
-    return tempArr[Math.floor(Math.random() * tempArr.length)];
   } else {
-    let tempArr;
-    if (bodyPartsvTargets) {
+    if (!bodyPartsvTargets) {
       tempArr = data.filter(
         (curr) => curr.target === target && filters.includes(curr.equipment)
       );
@@ -22,9 +32,11 @@ const getRandomWorkoutByTarget = (target, filters, bodyPartsvTargets) => {
         (curr) => curr.bodyPart === target && filters.includes(curr.equipment)
       );
     }
-
-    return tempArr[Math.floor(Math.random() * tempArr.length)];
   }
+
+  let newWO = tempArr[Math.floor(Math.random() * tempArr.length)];
+  // console.log(newWO);
+  return newWO;
 };
 
 export default getRandomWorkoutByTarget;

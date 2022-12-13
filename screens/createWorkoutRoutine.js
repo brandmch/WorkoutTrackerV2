@@ -7,17 +7,15 @@ import CreateWorkoutInstance from "../components/createWorkoutInstance";
 import listOfEquipment from "../data/utils/getListOfEquipment";
 
 function DisplayListOfEquipment({ currWOobj, setCurrWOobj }) {
-  let { filters } = currWOobj;
-  return Object.keys(filters).map((curr) => (
+  return Object.keys(currWOobj.filters).map((curr) => (
     <CheckBox
       title={curr}
       key={curr}
-      checked={filters[curr]}
+      checked={currWOobj.filters[curr]}
       onPress={() => {
-        setCurrWOobj({
-          ...currWOobj,
-          filters: { ...filters, [curr]: !tempObj.filters[curr] },
-        });
+        let tempObj = { ...currWOobj };
+        tempObj.filters[curr] = !tempObj.filters[curr];
+        setCurrWOobj(tempObj);
       }}
     />
   ));
@@ -66,8 +64,8 @@ export default function CreateWorkoutRoutine({ navigation }) {
         <Text>Filters</Text>
         <ScrollView>
           <DisplayListOfEquipment
-            filters={currWOobj}
-            setFilters={setCurrWOobj}
+            currWOobj={currWOobj}
+            setCurrWOobj={setCurrWOobj}
           />
         </ScrollView>
 
@@ -81,7 +79,10 @@ export default function CreateWorkoutRoutine({ navigation }) {
       <Button
         title={"Add Workout"}
         onPress={() =>
-          setCurrWOobj({ ...currWOobj, targets: [...targets, "Select Target"] })
+          setCurrWOobj({
+            ...currWOobj,
+            targets: [...currWOobj.targets, "Select Target"],
+          })
         }
       />
       {currWOobj.targets.map((curr, ind) => {
@@ -97,16 +98,8 @@ export default function CreateWorkoutRoutine({ navigation }) {
       <Button
         title={"Start"}
         onPress={() => {
-          let equipment = [];
-          for (let i in filters) {
-            if (filters[i] === true) {
-              equipment.push(i);
-            }
-          }
           navigation.navigate("DisplayWorkoutRoutine", {
-            targets: targets,
-            filters: equipment,
-            bodyPartsvTargets: bodypartvTarget,
+            currWOobj: currWOobj,
           });
         }}
       />
