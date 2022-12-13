@@ -5,36 +5,39 @@ import { Button, Icon, Text, Overlay, CheckBox, Switch } from "@rneui/base";
 
 import CreateWorkoutInstance from "../components/createWorkoutInstance";
 import listOfEquipment from "../data/utils/getListOfEquipment";
-import listOfBodyParts from "../data/utils/getListOfBodyParts";
-import listOfTargets from "../data/utils/getListOfTargets";
 
-function DisplayListOfEquipment({ filters, setFilters }) {
+function DisplayListOfEquipment({ currWOobj, setCurrWOobj }) {
+  let { filters } = currWOobj;
   return Object.keys(filters).map((curr) => (
     <CheckBox
       title={curr}
       key={curr}
       checked={filters[curr]}
       onPress={() => {
-        let tempObj = { ...filters };
-        tempObj[curr] = !tempObj[curr];
-        setFilters(tempObj);
+        setCurrWOobj({
+          ...currWOobj,
+          filters: { ...filters, [curr]: !tempObj.filters[curr] },
+        });
       }}
     />
   ));
 }
+
 export default function CreateWorkoutRoutine({ navigation }) {
-  const [targets, setTargets] = useState(["Select Target"]);
   const [filterOverlayVisable, setFilterOverlayIsVisable] = useState(false);
-  const [filters, setFilters] = useState({});
-  const [bodypartvTarget, setBodypartvTarget] = useState(false);
+  const [currWOobj, setCurrWOobj] = useState({
+    targets: ["Select Target"],
+    filters: {},
+    bodyVtarget: true,
+  });
 
   useEffect(() => {
-    let tempObj = {};
+    let tempObj = { ...currWOobj };
     let equip = listOfEquipment();
     equip.map((curr) => {
-      tempObj[curr] = false;
+      tempObj.filters[curr] = false;
     });
-    setFilters(tempObj);
+    setCurrWOobj(tempObj);
   }, []);
 
   return (
@@ -46,10 +49,13 @@ export default function CreateWorkoutRoutine({ navigation }) {
         }}
       />
       <Switch
-        value={bodypartvTarget}
+        value={currWOobj.bodyVtarget}
         onValueChange={() => {
-          setBodypartvTarget(!bodypartvTarget);
-          setTargets(["Select Target"]);
+          setCurrWOobj({
+            ...currWOobj,
+            bodyVtarget: !currWOobj.bodyVtarget,
+            targets: ["Select Target"],
+          });
         }}
       />
       <Overlay
@@ -59,7 +65,10 @@ export default function CreateWorkoutRoutine({ navigation }) {
       >
         <Text>Filters</Text>
         <ScrollView>
-          <DisplayListOfEquipment filters={filters} setFilters={setFilters} />
+          <DisplayListOfEquipment
+            filters={currWOobj}
+            setFilters={setCurrWOobj}
+          />
         </ScrollView>
 
         <Button
@@ -71,24 +80,17 @@ export default function CreateWorkoutRoutine({ navigation }) {
       </Overlay>
       <Button
         title={"Add Workout"}
-        onPress={() => setTargets([...targets, "Select Target"])}
+        onPress={() =>
+          setCurrWOobj({ ...currWOobj, targets: [...targets, "Select Target"] })
+        }
       />
-      {targets.map((curr, ind) => {
-        return bodypartvTarget ? (
+      {currWOobj.targets.map((curr, ind) => {
+        return (
           <CreateWorkoutInstance
             key={ind}
             ind={ind}
-            listOfTargets={listOfTargets}
-            targets={targets}
-            setTargets={setTargets}
-          />
-        ) : (
-          <CreateWorkoutInstance
-            key={ind}
-            ind={ind}
-            listOfTargets={listOfBodyParts}
-            targets={targets}
-            setTargets={setTargets}
+            currWOobj={currWOobj}
+            setCurrWOobj={setCurrWOobj}
           />
         );
       })}

@@ -1,14 +1,5 @@
-let data = require("./data/workoutData.json");
+let obj = { jec: 14, liek: "123aa", likasd: [1, 2, 3, 4] };
 
-const listOfEquipment = () => {
-  let arr = data.reduce((acc, curr) => {
-    return acc.includes(curr.equipment) ? acc : [...acc, curr.equipment];
-  }, []);
-  return arr;
-};
+let newa = { ...obj, liek: "haha" };
 
-let obj = {};
-
-listOfEquipment().map((curr) => (obj[`${curr}`] = false));
-
-console.log(obj);
+console.log(newa);
