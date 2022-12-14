@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { ScrollView } from "react-native";
 import { Button, Icon, Text, Overlay, CheckBox, Switch } from "@rneui/base";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import CreateWorkoutInstance from "../components/createWorkoutInstance";
 import listOfEquipment from "../data/utils/getListOfEquipment";
@@ -101,6 +102,12 @@ export default function CreateWorkoutRoutine({ navigation }) {
           navigation.navigate("DisplayWorkoutRoutine", {
             currWOobj: currWOobj,
           });
+        }}
+      />
+      <Button
+        title={"temp"}
+        onPress={() => {
+          navigation.navigate("Home");
         }}
       />
     </ScrollView>
