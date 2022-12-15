@@ -5,6 +5,7 @@ import { Button, Card, Icon, Text } from "@rneui/base";
 
 import DisplayWorkoutInstance from "../components/displayWorkoutInstance";
 import getRandomWorkoutByTarget from "../data/utils/getRandomWorkoutByTarget";
+import favoriteWorkoutTable from "../data/sqlLiteDBs/favoriteWorkoutTable";
 
 export default function DisplayWorkoutRoutine({ navigation, route }) {
   const [woList, setWOList] = useState([]);
@@ -21,13 +22,10 @@ export default function DisplayWorkoutRoutine({ navigation, route }) {
           currWOobj.filters,
           currWOobj.bodyVtarget
         );
-        console.log(newWO);
         tempArr.push(newWO);
       });
     setWOList(tempArr);
   }, []);
-
-  // console.log(woList);
 
   return (
     <ScrollView>
@@ -44,6 +42,7 @@ export default function DisplayWorkoutRoutine({ navigation, route }) {
         );
       })}
       <Button title={"BEGIN WORKOUT"} containerStyle={{ margin: 20 }} />
+      <Button title={"all"} onPress={() => favoriteWorkoutTable.getAll()} />
     </ScrollView>
   );
 }

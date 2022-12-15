@@ -14,8 +14,6 @@ const getRandomWorkoutByTarget = (...args) => {
     }
   }
 
-  console.log(target, filters, bodyPartsvTargets);
-
   if (filters.length === 0) {
     if (!bodyPartsvTargets) {
       tempArr = data.filter((curr) => curr.target === target);

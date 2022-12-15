@@ -27,6 +27,23 @@ const favoriteWorkoutTable = {
     });
   },
 
+  checkIfFavorite: (workoutID, setIsFavorite) => {
+    open();
+    db.transaction((tx) => {
+      tx.executeSql(
+        `SELECT EXISTS(SELECT workoutID FROM FavoriteWorkouts WHERE workoutID = ${workoutID})`,
+        [],
+        (txObj, res) => {
+          let value = Object.values(res.rows._array[0])[0];
+          setIsFavorite(value);
+        },
+        (err) => {
+          console.log("ERROR: FavoriteWorkouts.add()", err);
+        }
+      );
+    });
+  },
+
   add: async (workoutID) => {
     open();
     try {

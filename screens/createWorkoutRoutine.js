@@ -6,6 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import CreateWorkoutInstance from "../components/createWorkoutInstance";
 import listOfEquipment from "../data/utils/getListOfEquipment";
+import favoriteWorkoutTable from "../data/sqlLiteDBs/favoriteWorkoutTable";
 
 function DisplayListOfEquipment({ currWOobj, setCurrWOobj }) {
   return Object.keys(currWOobj.filters).map((curr) => (
@@ -110,6 +111,7 @@ export default function CreateWorkoutRoutine({ navigation }) {
           navigation.navigate("Home");
         }}
       />
+      <Button title={"all"} onPress={() => favoriteWorkoutTable.getAll()} />
     </ScrollView>
   );
 }
