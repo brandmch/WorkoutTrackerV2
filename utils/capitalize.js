@@ -1,5 +1,6 @@
 const capitalize = (str) => {
   return str
+    .trim()
     .split(" ")
     .map((curr, ind, arr) => {
       let word = curr.split("");

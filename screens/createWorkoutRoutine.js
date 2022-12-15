@@ -105,13 +105,6 @@ export default function CreateWorkoutRoutine({ navigation }) {
           });
         }}
       />
-      <Button
-        title={"temp"}
-        onPress={() => {
-          navigation.navigate("Home");
-        }}
-      />
-      <Button title={"all"} onPress={() => favoriteWorkoutTable.getAll()} />
     </ScrollView>
   );
 }
