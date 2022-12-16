@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import listOfTargets from "../data/utils/getListOfTargets";
 import listOfBodyParts from "../data/utils/getListOfBodyParts";
+import capitalize from "../utils/capitalize";
 
 export default function CreateWorkoutInstance({
   ind,
@@ -18,7 +19,9 @@ export default function CreateWorkoutInstance({
     <ListItem.Accordion
       content={
         <ListItem.Content>
-          <ListItem.Title h4>{currWOobj.targets[ind]}</ListItem.Title>
+          <ListItem.Title h4>
+            {capitalize(currWOobj.targets[ind])}
+          </ListItem.Title>
         </ListItem.Content>
       }
       isExpanded={expanded}

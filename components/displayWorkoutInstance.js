@@ -15,12 +15,14 @@ const DisplayWorkoutInstance = ({
   currWOobj,
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [favoritesArr, setFavoritesArr] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    favoriteWorkoutTable.checkIfFavorite(workout.id, setIsFavorite);
+    favoriteWorkoutTable.getFavorites(workout.id, setFavoritesArr);
   }, [refresh]);
+
+  let isFavorite = favoritesArr.includes(workout.id);
 
   return (
     <Pressable
@@ -79,7 +81,6 @@ const DisplayWorkoutInstance = ({
                 );
                 let tempArr = [...woList];
                 tempArr[index] = newWO;
-                favoriteWorkoutTable.checkIfFavorite(newWO.id, setIsFavorite);
                 setWOList(tempArr);
               }}
             />

@@ -105,6 +105,12 @@ export default function CreateWorkoutRoutine({ navigation }) {
           });
         }}
       />
+      <Button
+        title={"drop table"}
+        onPress={() => {
+          favoriteWorkoutTable.drop();
+        }}
+      />
     </ScrollView>
   );
 }
