@@ -11,14 +11,14 @@ function open() {
 }
 
 const favoriteWorkoutTable = {
-  getAll: (setGetAll) => {
+  getAll: () => {
     open();
     db.transaction((tx) => {
       tx.executeSql(
         `SELECT workoutID FROM FavoriteWorkouts`,
         null,
         (txObj, res) => {
-          setGetAll(res.rows._array);
+          console.log(res.rows._array);
         },
         (txObj, err) => {
           console.log("ERR", txObj, err);
