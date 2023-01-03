@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import CreateWorkoutRoutine from "./createWorkoutRoutine";
 import DisplayWorkoutRoutine from "./displayWorkoutRoutine";
-import Home from "./temp";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -25,7 +24,6 @@ export default function Nav() {
           name="DisplayWorkoutRoutine"
           component={DisplayWorkoutRoutine}
         />
-        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );
