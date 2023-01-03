@@ -9,11 +9,15 @@ import DisplayWorkoutInstance from "../components/displayWorkoutInstance";
 import getRandomWorkoutByTarget from "../data/utils/getRandomWorkoutByTarget";
 import favoriteWorkoutTable from "../data/sqlLiteDBs/favoriteWorkoutTable";
 
-function getSearchList(favoriteSwitch) {
+function getSearchList(favoriteSwitch, listOfFavs) {
   let tempArr = [];
   for (let i = 0; i < data.length; i++) {
     tempArr.push({ name: data[i].name, id: data[i].id });
   }
+  if (favoriteSwitch) {
+    tempArr = tempArr.filter((curr) => listOfFavs.includes(curr.id));
+  }
+
   return tempArr.sort();
 }
 
@@ -38,18 +42,19 @@ function getSearchedWorkout(item) {
 }
 
 export default function DisplayWorkoutRoutine({ navigation, route }) {
+  // DisplayWorkoutRoutine grabs currWOobj from createWorkoutRoutine.
+  // currWOobj = {targets: [], filters: {}, bodyVtarget: boolean}
+
   const [woList, setWOList] = useState([]);
   const [favoriteSwitch, setFavoriteSwitch] = useState(false);
+  const [listOfFavs, setListOfFavs] = useState([]);
   const { currWOobj } = route.params;
 
-  let searchList = getSearchList(favoriteSwitch);
-
-  let favorites = favoriteWorkoutTable.getAll();
-
-  console.log("favorites:", favorites);
+  let searchList = getSearchList(favoriteSwitch, listOfFavs);
 
   useEffect(() => {
     setWOList(getFilters(currWOobj));
+    favoriteWorkoutTable.getFavorites(null, setListOfFavs);
   }, []);
 
   return (

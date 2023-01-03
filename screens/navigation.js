@@ -11,7 +11,10 @@ const Stack = createNativeStackNavigator();
 export default function Nav() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="CreateWorkoutRoutine">
+      <Stack.Navigator
+        initialRouteName="CreateWorkoutRoutine"
+        screenOptions={{}}
+      >
         <Stack.Screen
           name="CreateWorkoutRoutine"
           component={CreateWorkoutRoutine}
