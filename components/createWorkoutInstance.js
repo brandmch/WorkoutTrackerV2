@@ -14,6 +14,7 @@ export default function CreateWorkoutInstance({
   let options = currWOobj.bodyVtarget
     ? [...listOfBodyParts]
     : [...listOfTargets];
+  options = options.map((curr) => capitalize(curr));
 
   return (
     <View style={styles.view}>
@@ -60,6 +61,5 @@ const styles = StyleSheet.create({
   view: {
     marginVertical: 1,
     marginHorizontal: 10,
-    borderRadius: 50,
   },
 });
