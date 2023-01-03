@@ -41,6 +41,7 @@ export default function Nav() {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="WORStack" component={WORStack} />
         <Tab.Screen name="WLStack" component={WLStack} />
       </Tab.Navigator>
