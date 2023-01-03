@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { ScrollView, StatusBar, View, StyleSheet } from "react-native";
 import { Button, Switch, Text } from "@rneui/base";
 import SearchableDropDown from "react-native-searchable-dropdown";
+// https://www.npmjs.com/package/react-native-searchable-dropdown
 
 import data from "../data/workoutData.json";
 import DisplayWorkoutInstance from "../components/displayWorkoutInstance";
@@ -55,29 +56,33 @@ export default function DisplayWorkoutRoutine({ navigation, route }) {
   useEffect(() => {
     setWOList(getFilters(currWOobj));
     favoriteWorkoutTable.getFavorites(null, setListOfFavs);
-  }, []);
+  }, [favoriteSwitch]);
 
   return (
     <View>
-      <SearchableDropDown
-        onItemSelect={(item) => {
-          let newWO = getSearchedWorkout(item);
-          let tempArr = [...woList];
-          tempArr.unshift(newWO);
-          setWOList(tempArr);
-        }}
-        items={searchList}
-        textInputProps={styles.searchableDropDown.textInputProps}
-        itemStyle={styles.searchableDropDown.itemStyle}
-        itemTextStyle={{ color: "#222" }}
-        itemsContainerStyle={{ maxHeight: 140 }}
-        placeholder="Search for Workout"
-      />
-      <Text>Favorites</Text>
-      <Switch
-        value={favoriteSwitch}
-        onValueChange={() => setFavoriteSwitch(!favoriteSwitch)}
-      />
+      <View>
+        <SearchableDropDown
+          onItemSelect={(item) => {
+            let newWO = getSearchedWorkout(item);
+            let tempArr = [...woList];
+            tempArr.unshift(newWO);
+            setWOList(tempArr);
+          }}
+          items={searchList}
+          textInputProps={styles.searchableDropDown.textInputProps}
+          itemStyle={styles.searchableDropDown.itemStyle}
+          itemTextStyle={{ color: "#222" }}
+          itemsContainerStyle={{ maxHeight: 140 }}
+          placeholder="Search for Workout"
+        />
+        <Text>Favorites</Text>
+        <Switch
+          value={favoriteSwitch}
+          onValueChange={() => {
+            setFavoriteSwitch(!favoriteSwitch);
+          }}
+        />
+      </View>
       <ScrollView>
         {woList.map((curr, index) => {
           return (
