@@ -1,4 +1,5 @@
-import { Input, SearchBar, Text, ListItem } from "@rneui/base";
+import { Input, SearchBar, Text } from "@rneui/base";
+import { ListItem } from "@rneui/themed";
 import { useEffect, useState } from "react";
 import { ScrollView, View, StyleSheet } from "react-native";
 import listOfTargets from "../data/utils/getListOfTargets";
