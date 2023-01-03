@@ -1,15 +1,8 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import {
-  Button,
-  Icon,
-  Text,
-  Overlay,
-  CheckBox,
-  Switch,
-  FAB,
-} from "@rneui/base";
+import { Button, Icon, Overlay, CheckBox, Switch, FAB } from "@rneui/base";
+import { Text } from "@rneui/themed";
 
 import CreateWorkoutInstance from "../components/createWorkoutInstance";
 import listOfEquipment from "../data/utils/getListOfEquipment";
