@@ -6,6 +6,8 @@ const getRandomWorkoutByTarget = (...args) => {
   let filters = [];
   let bodyPartsvTargets = args[2];
 
+  target = target.toLowerCase();
+
   let tempArr;
 
   for (let i in args[1]) {
