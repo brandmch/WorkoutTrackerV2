@@ -39,6 +39,7 @@
     "owner": "brandmch",
     "runtimeVersion": {
       "policy": "sdkVersion"
-    }
+    },
+    "jsEngine": "hermes"
   }
 }

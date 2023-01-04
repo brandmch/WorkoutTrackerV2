@@ -1,11 +1,17 @@
+import * as React from "react";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Text, FAB, Overlay, Input, Button } from "@rneui/themed";
 import * as SQLite from "expo-sqlite";
 
 //
-// SQLite
+// MongoDB
+
+// MongoDB ^
 //
+
+//
+// SQLite
 const db = SQLite.openDatabase("MainDB", 1);
 
 const open = () => {
@@ -15,7 +21,6 @@ const open = () => {
     );
   });
 };
-
 const add = (obj) => {
   open();
   try {
@@ -34,7 +39,6 @@ const add = (obj) => {
     console.log(err);
   }
 };
-
 const getAll = async ({ state, setState }) => {
   open();
   db.transaction((tx) => {
@@ -50,7 +54,6 @@ const getAll = async ({ state, setState }) => {
     );
   });
 };
-
 const drop = () => {
   open();
   try {
@@ -67,7 +70,6 @@ const drop = () => {
     console.log(err);
   }
 };
-//
 // SQLite db ^
 //
 
@@ -79,13 +81,14 @@ export default function WeightLog() {
 
   useEffect(() => {
     getAll({ state: getAllfromDB, setState: setGetAllfromDB });
+  }, []);
+
+  useEffect(() => {
     let tempArr = getAllfromDB.reduce((acc, curr) => {
       return [...acc, curr.weight];
     }, []);
     setWeights(tempArr);
-  }, []);
-
-  console.log(weights);
+  }, [getAllfromDB]);
 
   return (
     <View style={{ height: "100%" }}>
