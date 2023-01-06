@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import { Text } from "@rneui/themed";
+import { LineChart } from "react-native-chart-kit";
 
 export default function Home() {
   return (

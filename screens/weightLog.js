@@ -1,14 +1,9 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { View, Dimensions } from "react-native";
 import { Text, FAB, Overlay, Input, Button } from "@rneui/themed";
+import { LineChart } from "react-native-chart-kit";
 import * as SQLite from "expo-sqlite";
-
-//
-// MongoDB
-
-// MongoDB ^
-//
 
 //
 // SQLite
@@ -73,6 +68,47 @@ const drop = () => {
 // SQLite db ^
 //
 
+//
+// Line Chart
+
+const WeightLineChart = (props) => {
+  const data = {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [{ data: props.data }],
+  };
+
+  const chartConfig = {
+    backgroundGradientFrom: "#FFFFFF",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#FFFFFF",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
+  };
+
+  const { fontScale, height, width } = Dimensions.get("window");
+
+  return (
+    <LineChart
+      data={data}
+      width={width}
+      height={height}
+      chartConfig={chartConfig}
+      yAxisSuffix={" lbs"}
+    />
+  );
+};
+
+// Line Chart ^
+//
+
+const Weights = (props) => {
+  const { weights } = props;
+  return weights.map((curr, ind) => <Text key={ind}>{curr}</Text>);
+};
+
 export default function WeightLog() {
   const [overlayVisable, setOverlayVisable] = useState(false);
   const [getAllfromDB, setGetAllfromDB] = useState([]);
@@ -92,10 +128,11 @@ export default function WeightLog() {
 
   return (
     <View style={{ height: "100%" }}>
+      <View style={{ height: "60%", margin: 10 }}>
+        <WeightLineChart data={weights} />
+      </View>
       <Text>WeightLoss!</Text>
-      {weights.map((curr, ind) => (
-        <Text key={ind}>{curr}</Text>
-      ))}
+      <Weights weights={weights} />
       <FAB
         icon={{ name: "add", color: "white" }}
         placement="right"
@@ -122,7 +159,6 @@ export default function WeightLog() {
           onPress={() => {
             setWeights([...weights, input]);
             setOverlayVisable(false);
-            console.log(typeof input);
             add({ date: Date.now(), weight: parseFloat(input) });
           }}
         />
