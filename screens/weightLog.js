@@ -123,11 +123,10 @@ const WeightLineChart = (props) => {
 // Displays weight instances with date/time
 const WeightsChart = (props) => {
   const { data } = props;
-  const weightsArr = getWeights(data);
-  const datesArr = getDates(data);
-  return weightsArr.map((curr, ind) => (
-    <View key={ind}>
-      <Text>{curr}</Text>
+  return data.map((curr, ind) => (
+    <View key={ind} style={{ display: "flex", flex: 1, flexDirection: "row" }}>
+      <Text style={{ flex: 1 }}>{curr.weight}</Text>
+      <Text style={{ flex: 1 }}>{curr.date}</Text>
     </View>
   ));
 };
