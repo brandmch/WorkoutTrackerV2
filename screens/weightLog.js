@@ -4,6 +4,7 @@ import { View, Dimensions } from "react-native";
 import { Text, FAB, Overlay, Input, Button } from "@rneui/themed";
 import { LineChart } from "react-native-chart-kit";
 import * as SQLite from "expo-sqlite";
+import getrn from "../utils/getrn";
 
 //
 // SQLite
@@ -70,11 +71,29 @@ const drop = () => {
 
 //
 // Line Chart
+const getWeights = (obj) => {
+  return obj.reduce((acc, curr) => {
+    return [...acc, curr.weight];
+  }, []);
+};
+
+const getDates = (obj) => {
+  return obj.reduce((acc, curr) => {
+    let date = new Date(parseInt(curr.date));
+    return [
+      ...acc,
+      `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+    ];
+  }, []);
+};
 
 const WeightLineChart = (props) => {
+  const dates = getDates(props.data);
+  const weights = getWeights(props.data);
+
   const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [{ data: props.data }],
+    labels: dates,
+    datasets: [{ data: weights }],
   };
 
   const chartConfig = {
@@ -88,25 +107,29 @@ const WeightLineChart = (props) => {
     useShadowColorFromDataset: false, // optional
   };
 
-  const { fontScale, height, width } = Dimensions.get("window");
-
   return (
     <LineChart
       data={data}
-      width={width}
-      height={height}
+      width={props.size.width}
+      height={props.size.height}
       chartConfig={chartConfig}
       yAxisSuffix={" lbs"}
     />
   );
 };
-
 // Line Chart ^
 //
 
-const Weights = (props) => {
-  const { weights } = props;
-  return weights.map((curr, ind) => <Text key={ind}>{curr}</Text>);
+// Displays weight instances with date/time
+const WeightsChart = (props) => {
+  const { data } = props;
+  const weightsArr = getWeights(data);
+  const datesArr = getDates(data);
+  return weightsArr.map((curr, ind) => (
+    <View key={ind}>
+      <Text>{curr}</Text>
+    </View>
+  ));
 };
 
 export default function WeightLog() {
@@ -114,26 +137,33 @@ export default function WeightLog() {
   const [getAllfromDB, setGetAllfromDB] = useState([]);
   const [weights, setWeights] = useState([]);
   const [input, setInput] = useState();
+  console.log("GO", getrn());
 
   useEffect(() => {
     getAll({ state: getAllfromDB, setState: setGetAllfromDB });
   }, []);
 
-  useEffect(() => {
-    let tempArr = getAllfromDB.reduce((acc, curr) => {
-      return [...acc, curr.weight];
-    }, []);
-    setWeights(tempArr);
-  }, [getAllfromDB]);
+  // Defines the size of the chart.
+  // Creates a <View> with these dimensions, same dimensions are passed into <WeightLineChart>. (there might be a better way to do this)
+  const { fontScale, height, width } = Dimensions.get("window");
+  let chartsize = { width: width, height: (height * 3) / 5 };
 
   return (
     <View style={{ height: "100%" }}>
-      <View style={{ height: "60%", margin: 10 }}>
-        <WeightLineChart data={weights} />
+      <View style={{ width: chartsize.width, height: chartsize.height }}>
+        {getAllfromDB.length > 0 ? (
+          <WeightLineChart data={getAllfromDB} size={chartsize} />
+        ) : (
+          <Text h1>Add Weight</Text>
+        )}
       </View>
-      <Text>WeightLoss!</Text>
-      <Weights weights={weights} />
-      <FAB
+      {getAllfromDB.length > 0 ? (
+        <WeightsChart data={getAllfromDB} />
+      ) : (
+        <Text>Add Weight</Text>
+      )}
+
+      {/* <FAB
         icon={{ name: "add", color: "white" }}
         placement="right"
         style={{ paddingRight: 10, paddingBottom: 20 }}
@@ -162,7 +192,7 @@ export default function WeightLog() {
             add({ date: Date.now(), weight: parseFloat(input) });
           }}
         />
-      </Overlay>
+      </Overlay> */}
     </View>
   );
 }

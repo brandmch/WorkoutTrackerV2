@@ -7,7 +7,6 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     "Lato-Black": require("./assets/fonts/Lato-Black.ttf"),
   });
-  console.log("GO");
 
   if (fontsLoaded) {
     const theme = createTheme({
