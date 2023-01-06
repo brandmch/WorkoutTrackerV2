@@ -5,6 +5,7 @@ import { Text, FAB, Overlay, Input, Button } from "@rneui/themed";
 import { LineChart } from "react-native-chart-kit";
 import * as SQLite from "expo-sqlite";
 import getrn from "../utils/getrn";
+import { ScrollView } from "react-native";
 
 //
 // SQLite
@@ -114,6 +115,7 @@ const WeightLineChart = (props) => {
       height={props.size.height}
       chartConfig={chartConfig}
       yAxisSuffix={" lbs"}
+      yLabelsOffset={5}
     />
   );
 };
@@ -163,7 +165,9 @@ export default function WeightLog() {
         )}
       </View>
       {getAllfromDB.length > 0 ? (
-        <WeightsChart data={getAllfromDB} />
+        <ScrollView>
+          <WeightsChart data={getAllfromDB} />
+        </ScrollView>
       ) : (
         <Text>Add Weight</Text>
       )}
