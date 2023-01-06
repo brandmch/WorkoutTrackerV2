@@ -122,25 +122,31 @@ const WeightLineChart = (props) => {
 
 // Displays weight instances with date/time
 const WeightsChart = (props) => {
-  const { data } = props;
-  return data.map((curr, ind) => (
-    <View key={ind} style={{ display: "flex", flex: 1, flexDirection: "row" }}>
-      <Text style={{ flex: 1 }}>{curr.weight}</Text>
-      <Text style={{ flex: 1 }}>{curr.date}</Text>
-    </View>
-  ));
+  return props.data.map((curr, ind) => {
+    const now = new Date(parseInt(curr.date));
+    const dateStr = `${now.getMonth()}/${now.getDay()}/${now.getFullYear()}`;
+    return (
+      <View
+        key={ind}
+        style={{ display: "flex", flex: 1, flexDirection: "row" }}
+      >
+        <Text style={{ flex: 1 }}>{curr.weight}</Text>
+        <Text style={{ flex: 1 }}>{dateStr}</Text>
+      </View>
+    );
+  });
 };
 
 export default function WeightLog() {
   const [overlayVisable, setOverlayVisable] = useState(false);
   const [getAllfromDB, setGetAllfromDB] = useState([]);
-  const [weights, setWeights] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const [input, setInput] = useState();
   console.log("GO", getrn());
 
   useEffect(() => {
     getAll({ state: getAllfromDB, setState: setGetAllfromDB });
-  }, []);
+  }, [refresh]);
 
   // Defines the size of the chart.
   // Creates a <View> with these dimensions, same dimensions are passed into <WeightLineChart>. (there might be a better way to do this)
@@ -162,14 +168,14 @@ export default function WeightLog() {
         <Text>Add Weight</Text>
       )}
 
-      {/* <FAB
+      <FAB
         icon={{ name: "add", color: "white" }}
         placement="right"
         style={{ paddingRight: 10, paddingBottom: 20 }}
         onPress={() => setOverlayVisable(true)}
         onLongPress={() => {
-          setWeights([]);
           drop();
+          setRefresh(!refresh);
         }}
       />
       <Overlay
@@ -186,12 +192,12 @@ export default function WeightLog() {
         <Button
           title="Log"
           onPress={() => {
-            setWeights([...weights, input]);
             setOverlayVisable(false);
             add({ date: Date.now(), weight: parseFloat(input) });
+            setRefresh(!refresh);
           }}
         />
-      </Overlay> */}
+      </Overlay>
     </View>
   );
 }
