@@ -185,7 +185,7 @@ export default function WeightLog() {
       <Overlay
         isVisible={overlayVisable}
         onBackdropPress={() => setOverlayVisable(false)}
-        overlayStyle={{ width: "60%" }}
+        overlayStyle={{ width: "60%", padding: 35, borderRadius: 10 }}
       >
         <Input
           placeholder="Weight  (lbs)"
