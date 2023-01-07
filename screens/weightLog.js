@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { View, Dimensions } from "react-native";
-import { Text, FAB, Overlay, Input, Button } from "@rneui/themed";
+import { Text, FAB, Overlay, Input, Button, Card } from "@rneui/themed";
 import { LineChart } from "react-native-chart-kit";
 import * as SQLite from "expo-sqlite";
 import getrn from "../utils/getrn";
@@ -109,14 +109,16 @@ const WeightLineChart = (props) => {
   };
 
   return (
-    <LineChart
-      data={data}
-      width={props.size.width}
-      height={props.size.height}
-      chartConfig={chartConfig}
-      yAxisSuffix={" lbs"}
-      yLabelsOffset={5}
-    />
+    <Card>
+      <LineChart
+        data={data}
+        width={props.size.width}
+        height={props.size.height}
+        chartConfig={chartConfig}
+        yAxisSuffix={" lbs"}
+        yLabelsOffset={5}
+      />
+    </Card>
   );
 };
 // Line Chart ^
@@ -153,24 +155,27 @@ export default function WeightLog() {
   // Defines the size of the chart.
   // Creates a <View> with these dimensions, same dimensions are passed into <WeightLineChart>. (there might be a better way to do this)
   const { fontScale, height, width } = Dimensions.get("window");
-  let chartsize = { width: width, height: (height * 3) / 5 };
+  let chartsize = { width: (width * 90) / 100, height: (height * 3) / 5 };
 
   return (
-    <View style={{ height: "100%" }}>
-      <View style={{ width: chartsize.width, height: chartsize.height }}>
-        {getAllfromDB.length > 0 ? (
-          <WeightLineChart data={getAllfromDB} size={chartsize} />
-        ) : (
-          <Text h1>Add Weight</Text>
-        )}
-      </View>
+    <View>
       {getAllfromDB.length > 0 ? (
-        <ScrollView>
-          <WeightsChart data={getAllfromDB} />
-        </ScrollView>
+        <WeightLineChart data={getAllfromDB} size={chartsize} />
       ) : (
-        <Text>Add Weight</Text>
+        <Text h1>Add Weight</Text>
       )}
+
+      <ScrollView
+        style={{
+          width: chartsize.width,
+        }}
+      >
+        {getAllfromDB.length > 0 ? (
+          <WeightsChart data={getAllfromDB} />
+        ) : (
+          <Text>Add Weight</Text>
+        )}
+      </ScrollView>
 
       <FAB
         icon={{ name: "add", color: "white" }}
